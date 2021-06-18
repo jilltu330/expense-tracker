@@ -1,0 +1,40 @@
+{
+  "records": [
+    {
+      "name": "買菜",
+      "category": "餐飲食品",
+      "date": "2021-05-24",
+      "amount": 680
+    },
+    {
+      "name": "機車加油",
+      "category": "交通出行",
+      "date": "2021-05-28",
+      "amount": 100
+    },
+    {
+      "name": "桌遊",
+      "category": "休閒娛樂",
+      "date": "2021-05-30",
+      "amount": 450
+    },
+    {
+      "name": "Uber Eat",
+      "category": "餐飲食品",
+      "date": "2021-05-31",
+      "amount": 330
+    },
+    {
+      "name": "信用卡費",
+      "category": "其他",
+      "date": "2021-06-01",
+      "amount": 6948
+    },
+    {
+      "name": "好市多",
+      "category": "家居物業",
+      "date": "2021-06-07",
+      "amount": 7200
+    }
+  ]
+}
