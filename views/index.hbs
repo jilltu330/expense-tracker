@@ -5,11 +5,11 @@
     <div class="col-12 col-lg-6 mt-4">
       <form>
         <div class="form-group">
-          <label for="exampleFormControlSelect1"></label>
-          <select class="form-control" id="exampleFormControlSelect1">
-            <option>類別</option>
+          <select name="filterBy" id="inputFilter" class="form-control" onchange="submit();">
+            <option disabled selected>選擇類別</option>
             {{#each categories}}
-            <option>{{this.name}}</option>
+            <option value="{{this.name}}" name="{{this.name}}" {{#if (eq ../filterBy this.name)}} selected {{/if}}>
+              {{this.name}}</option>
             {{/each}}
           </select>
         </div>
@@ -20,36 +20,36 @@
     <div class="col-12 my-4">
       <div class="row justify-content-center align-items-center">
         <div class="col-12 col-lg-2">
-          <h6>總金額：</h6>
+          <h5>總金額：</h5>
         </div>
-        <div class="col-12 col-lg-4 text-center">
+        <div class="col-12 col-lg-4">
           <h1 class="text-success">$ {{ totalAmount }}</h1>
         </div>
       </div>
     </div>
 
     {{!-- Record Details --}}
-    <div class="col-12 col-lg-8 mt-4 bg-white">
+    <div class="col-12 col-lg-8 mt-4">
       <div class="data-panel">
         <ul class="list-group list-group-flush">
           {{#each records}}
           <li class="list-group-item">
-            <div class="row justify-content-center align-items-center">
-              <div class="col-2 text-center">
-                <i class="{{this.icon}} fa-3x" style="color: #80e6e8; "></i>
+            <div class="row d-flex align-items-center">
+              <div class="col-2 col-sm-2 d-flex justify-content-center align-items-center">
+                <i class="{{this.icon}} fa-2x" style="color: #80e6e8; "></i>
               </div>
-              <div class="col-7">
-                <p class="font-weight-bold">{{this.name}}</p>
-                <p>{{this.date}}</p>
+              <div class="col-8 col-sm-6">
+                <p class="record-name">{{this.name}}</p>
+                <p class="record-date">{{this.date}}</p>
               </div>
-              <div class="col-2 text-center">
-                <p class="font-weight-bold">{{this.amount}}</p>
+              <div class="col-2 col-sm-2 d-flex justify-content-center align-items-center">
+                <p class="record-amount">{{this.amount}}</p>
               </div>
-              <div class="col-12 col-sm-1 text-center">
-                <button type="button" class="btn btn-primary btn-sm mb-1"><i
-                    class="far fa-edit fa-fw fa-sm"></i></button>
-                <button type="button" class="btn btn-danger btn-sm mb-1"><i
-                    class="far fa-trash-alt fa-fw fa-sm"></i></button>
+              <div class="col-12 col-sm-2 text-center">
+                <button type="button" class="btn btn-primary m-1"><i
+                    class="far fa-edit fa-fw edit-btn"></i></button>
+                <button type="button" class="btn btn-danger m-1"><i
+                    class="far fa-trash-alt fa-fw delete-btn"></i></button>
               </div>
             </div>
           </li>
@@ -57,7 +57,7 @@
         </ul>
       </div>
       <div class="row justify-content-center mt-4">
-        <button type="button" class="btn btn-success btn-block">新增支出</button>
+        <button type="submit" class="btn btn-success btn-block">新增支出</button>
       </div>
     </div>
 

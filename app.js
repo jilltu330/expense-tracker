@@ -1,6 +1,8 @@
 const express = require("express")
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
+const hbshelpers = require('handlebars-helpers')
+const helpers = hbshelpers()
 
 const Record = require('./models/record')
 const Category = require('./models/category')
@@ -22,26 +24,23 @@ app.set('view engine', 'hbs')
 
 
 app.get('/', (req, res) => {
-
-  // Record.find().lean().sort('-date').then(records => {
-  //   Category.find().lean().then(categories => {
-  //     console.log('record:' + records.length + ',categories:' + categories.length)
-  //   })
-  // })
-
-  Promise.all([Record.find().lean().sort('-date'), Category.find().lean()]).then(results => {
+  const filterBy = req.query.filterBy
+  console.log(filterBy)
+  const query = filterBy===undefined ? undefined: { category: filterBy }
+  Promise.all([Record.find(query).lean().sort('-date'), Category.find().lean()]).then(results => {
     const [records, categories] = results
     let totalAmount = 0
     records.forEach(record => {
       record.date = dateConvert(record.date)
       totalAmount += record.amount
       const category = categories.find(category => category.name === record.category)
-      if(category){
+      if (category) {
         record.icon = category.icon
       }
     })
-    res.render('index', { records, categories, totalAmount})
-  })
+    console.log(filterBy)
+    res.render('index', { records, categories, totalAmount, filterBy })
+  }).catch(err => console.log(err))
 
 })
 
