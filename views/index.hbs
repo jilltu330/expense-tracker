@@ -1,1 +1,65 @@
-<h2>This is the index of Expense Tracker</h2>
+<div class="container mt-3">
+  <div class="row justify-content-center">
+
+    {{!-- Filter option --}}
+    <div class="col-12 col-lg-6 mt-4">
+      <form>
+        <div class="form-group">
+          <label for="exampleFormControlSelect1"></label>
+          <select class="form-control" id="exampleFormControlSelect1">
+            <option>類別</option>
+            {{#each categories}}
+            <option>{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </form>
+    </div>
+
+    {{!-- Total Amount --}}
+    <div class="col-12 my-4">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-lg-2">
+          <h6>總金額：</h6>
+        </div>
+        <div class="col-12 col-lg-4 text-center">
+          <h1 class="text-success">0000</h1>
+        </div>
+      </div>
+    </div>
+
+    {{!-- Record Details --}}
+    <div class="col-12 col-lg-8 mt-4">
+      <div class="data-panel">
+        <ul class="list-group list-group-flush">
+          {{#each records}}
+          <li class="list-group-item">
+            <div class="row justify-content-center align-items-center">
+              <div class="col-2 text-center">
+                <p>{{this.category}}</p>
+              </div>
+              <div class="col-7">
+                <p class="font-weight-bold">{{this.name}}</p>
+                <p>{{this.date}}</p>
+              </div>
+              <div class="col-2 text-center">
+                <p class="font-weight-bold">{{this.amount}}</p>
+              </div>
+              <div class="col-12 col-sm-1 text-center">
+                <button type="button" class="btn btn-primary btn-sm mb-1"><i
+                    class="far fa-edit fa-fw fa-sm"></i></button>
+                <button type="button" class="btn btn-danger btn-sm mb-1"><i
+                    class="far fa-trash-alt fa-fw fa-sm"></i></button>
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="row justify-content-center mt-4">
+        <button type="button" class="btn btn-primary btn-block">新增支出</button>
+      </div>
+    </div>
+
+  </div>
+</div>
