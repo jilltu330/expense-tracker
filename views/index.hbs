@@ -23,20 +23,20 @@
           <h6>總金額：</h6>
         </div>
         <div class="col-12 col-lg-4 text-center">
-          <h1 class="text-success">0000</h1>
+          <h1 class="text-success">$ {{ totalAmount }}</h1>
         </div>
       </div>
     </div>
 
     {{!-- Record Details --}}
-    <div class="col-12 col-lg-8 mt-4">
+    <div class="col-12 col-lg-8 mt-4 bg-white">
       <div class="data-panel">
         <ul class="list-group list-group-flush">
           {{#each records}}
           <li class="list-group-item">
             <div class="row justify-content-center align-items-center">
               <div class="col-2 text-center">
-                <p>{{this.category}}</p>
+                <i class="{{this.icon}} fa-3x" style="color: #80e6e8; "></i>
               </div>
               <div class="col-7">
                 <p class="font-weight-bold">{{this.name}}</p>
@@ -57,7 +57,7 @@
         </ul>
       </div>
       <div class="row justify-content-center mt-4">
-        <button type="button" class="btn btn-primary btn-block">新增支出</button>
+        <button type="button" class="btn btn-success btn-block">新增支出</button>
       </div>
     </div>
 

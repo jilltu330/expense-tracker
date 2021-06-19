@@ -22,52 +22,37 @@ app.set('view engine', 'hbs')
 
 
 app.get('/', (req, res) => {
-  const totalAmount = 0
-  const categories = [
-    {
-      "name": "家居物業",
-      "icon": "fas fa-home"
-    },
-    {
-      "name": "交通出行",
-      "icon": "fas fa-shuttle-van"
-    },
-    {
-      "name": "休閒娛樂",
-      "icon": "fas fa-grin-beam"
-    },
-    {
-      "name": "餐飲食品",
-      "icon": "fas fa-utensils"
-    },
-    {
-      "name": "其他",
-      "icon": "fas fa-pen"
-    }
-  ]
-  const records = [
-    {
-      "name": "買菜",
-      "category": "餐飲食品",
-      "date": "2021-05-24",
-      "amount": 680
-    },
-    {
-      "name": "機車加油",
-      "category": "交通出行",
-      "date": "2021-05-28",
-      "amount": 100
-    },
-    {
-      "name": "桌遊",
-      "category": "休閒娛樂",
-      "date": "2021-05-30",
-      "amount": 450
-    },
-  ]
-  res.render('index', { records, categories })
+
+  // Record.find().lean().sort('-date').then(records => {
+  //   Category.find().lean().then(categories => {
+  //     console.log('record:' + records.length + ',categories:' + categories.length)
+  //   })
+  // })
+
+  Promise.all([Record.find().lean().sort('-date'), Category.find().lean()]).then(results => {
+    const [records, categories] = results
+    let totalAmount = 0
+    records.forEach(record => {
+      record.date = dateConvert(record.date)
+      totalAmount += record.amount
+      const category = categories.find(category => category.name === record.category)
+      if(category){
+        record.icon = category.icon
+      }
+    })
+    res.render('index', { records, categories, totalAmount})
+  })
 
 })
+
+function dateConvert(date) {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const mStr = month > 9 ? month : '0' + month
+  const dStr = day > 9 ? day : '0' + day
+  return `${year}/${mStr}/${dStr}`
+}
 
 
 app.listen(PORT, () => {
