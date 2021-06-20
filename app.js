@@ -5,10 +5,7 @@ const hbshelpers = require('handlebars-helpers')
 const helpers = hbshelpers()
 const methodOverride = require('method-override')
 
-const Record = require('./models/record')
-const Category = require('./models/category')
-const record = require("./models/record")
-
+const routes = require('./routes')
 const app = express()
 const PORT = 3000
 
@@ -28,94 +25,9 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(methodOverride('_method'))
 
-//home route
-app.get('/', (req, res) => {
-  const filterBy = req.query.filterBy
-  const query = filterBy === undefined ? undefined : { category: filterBy }
-  Promise.all([Record.find(query).lean().sort('-date'), Category.find().lean()]).then(results => {
-    const [records, categories] = results
-    let totalAmount = 0
-    records.forEach(record => {
-      record.date = dateConvert(record.date)
-      totalAmount += record.amount
-      const category = categories.find(category => category.name === record.category)
-      if (category) {
-        record.icon = category.icon
-      }
-    })
-    res.render('index', { records, categories, totalAmount, filterBy })
-  }).catch(err => console.log(err))
-})
-
-//Create route
-app.get('/expenses/new', (req, res) => {
-  Category.find()
-    .lean()
-    .then(categories => res.render('new', { categories }))
-})
-
-app.post('/expenses', (req, res) => {
-  const name = req.body.name
-  const date = req.body.date
-  const category = req.body.category
-  const amount = req.body.amount
-
-  return Record.create({ name, date, category, amount })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-
-//Edit route
-app.get('/expenses/:id/edit', (req, res) => {
-  const id = req.params.id
-  Promise.all([Record.findById(id).lean(), Category.find().lean()])
-    .then(results => {
-      const [record, categories] = results
-      record.date = dateConvert(record.date)
-      const category = record.category
-      res.render('edit', { record, category, categories })
-    })
-    .catch(error => console.log(error))
-})
-
-app.put('/expenses/:id', (req, res) => {
-  const id = req.params.id
-  const name = req.body.name
-  const date = req.body.date
-  const category = req.body.category
-  const amount = req.body.amount
-
-  return Record.findById(id)
-    .then(record => {
-      record.name = name
-      record.date = date
-      record.category = category
-      record.amount = amount
-      return record.save()
-    })
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
-
-//Delete route
-app.delete('/expenses/:id', (req, res) => {
-  const id = req.params.id
-  return Record.findById(id)
-    .then(record => record.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.log(error))
-})
+app.use(routes)
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
 })
 
-// functions
-function dateConvert(date) {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const mStr = month > 9 ? month : '0' + month
-  const dStr = day > 9 ? day : '0' + day
-  return `${year}-${mStr}-${dStr}`
-}
