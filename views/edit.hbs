@@ -3,24 +3,23 @@
     <small>＊必填欄位</small>
   </div>
   <div class="col-sm-10">
-    <h4>請輸入你的支出</h4>
+    <h4>請修改你的支出</h4>
   </div>
 </div>
 
-
-<form action="/expenses" method="POST">
+<form action="/expenses/{{record._id}}/edit" method="POST">
   <!-- 名稱 -->
   <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">名稱<span>*</span> :</label>
     <div class="col-sm-10">
-      <input type="text" id="name" name="name" class="form-control" placeholder="請輸入支出名稱..." required>
+      <input type="text" id="name" name="name" class="form-control" placeholder="name" value="{{record.name}}" required>
     </div>
   </div>
   <!-- 日期 -->
   <div class="form-group row">
     <label for="date" class="col-sm-2 col-form-label">日期<span>*</span> :</label>
     <div class="col-sm-10">
-      <input type="date" id="date" name="date" class="form-control" placeholder="" required>
+      <input type="date" id="date" name="date" class="form-control" value="{{record.date}}" required>
     </div>
   </div>
   <!-- 類別 -->
@@ -30,7 +29,8 @@
       <select class="form-control" id="category" name="category" required>
         <option disabled selected>選擇類別</option>
         {{#each categories}}
-        <option value="{{this.name}}" name="{{this.name}}">{{this.name}}</option>
+        <option value="{{this.name}}" name="{{this.name}}" {{#if (eq ../category this.name)}} selected {{/if}}>
+          {{this.name}}</option>
         {{/each}}
       </select>
     </div>
@@ -39,11 +39,12 @@
   <div class="form-group row">
     <label for="amount" class="col-sm-2 col-form-label">金額<span>*</span> :</label>
     <div class="col-sm-10">
-      <input type="number" id="amount" name="amount" class="form-control" placeholder="" required>
+      <input type="number" id="amount" name="amount" class="form-control" placeholder="amount" value="{{record.amount}}"
+        required>
     </div>
   </div>
 
-  <button type="submit" class="btn btn-outline-info">新增支出</button>
+  <button type="submit" class="btn btn-outline-info">送出</button>
   <a href="/" class="btn btn-outline-info">back</a>
 
 </form>

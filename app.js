@@ -6,6 +6,7 @@ const helpers = hbshelpers()
 
 const Record = require('./models/record')
 const Category = require('./models/category')
+const record = require("./models/record")
 
 const app = express()
 const PORT = 3000
@@ -27,7 +28,6 @@ app.use(express.urlencoded({ extended: true }))
 //home route
 app.get('/', (req, res) => {
   const filterBy = req.query.filterBy
-  console.log(filterBy)
   const query = filterBy === undefined ? undefined : { category: filterBy }
   Promise.all([Record.find(query).lean().sort('-date'), Category.find().lean()]).then(results => {
     const [records, categories] = results
@@ -40,7 +40,6 @@ app.get('/', (req, res) => {
         record.icon = category.icon
       }
     })
-    console.log(filterBy)
     res.render('index', { records, categories, totalAmount, filterBy })
   }).catch(err => console.log(err))
 })
@@ -48,8 +47,8 @@ app.get('/', (req, res) => {
 //Create route
 app.get('/expenses/new', (req, res) => {
   Category.find()
-  .lean()
-  .then(categories => res.render('new', { categories }))
+    .lean()
+    .then(categories => res.render('new', { categories }))
 })
 
 app.post('/expenses', (req, res) => {
@@ -57,15 +56,43 @@ app.post('/expenses', (req, res) => {
   const date = req.body.date
   const category = req.body.category
   const amount = req.body.amount
-  console.log(name, date, category, amount)
-  
-  return Record.create({name, date, category, amount})
+
+  return Record.create({ name, date, category, amount })
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
+//Edit route
+app.get('/expenses/:id/edit', (req, res) => {
+  const id = req.params.id
+  Promise.all([Record.findById(id).lean(), Category.find().lean()])
+    .then(results => {
+      const [record, categories] = results
+      record.date = dateConvert(record.date)
+      const category = record.category
+      res.render('edit', { record, category, categories })
+    })
+    .catch(error => console.log(error))
+})
 
+app.post('/expenses/:id/edit', (req, res) => {
+  const id = req.params.id
+  const name = req.body.name
+  const date = req.body.date
+  const category = req.body.category
+  const amount = req.body.amount
 
+  return Record.findById(id)
+    .then(record => {
+      record.name = name
+      record.date = date
+      record.category = category
+      record.amount = amount
+      return record.save()
+    })
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 
 
@@ -80,5 +107,5 @@ function dateConvert(date) {
   const day = date.getDate()
   const mStr = month > 9 ? month : '0' + month
   const dStr = day > 9 ? day : '0' + day
-  return `${year}/${mStr}/${dStr}`
+  return `${year}-${mStr}-${dStr}`
 }
