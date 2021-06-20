@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-sm-2">
+    <small>＊必填欄位</small>
+  </div>
+  <div class="col-sm-10">
+    <h4>請輸入你的支出</h4>
+  </div>
+</div>
+
+
+<form action="/expenses" method="POST">
+  <!-- 名稱 -->
+  <div class="form-group row">
+    <label for="name" class="col-sm-2 col-form-label">名稱<span>*</span> :</label>
+    <div class="col-sm-10">
+      <input type="text" id="name" name="name" class="form-control" placeholder="請輸入支出名稱..." required>
+    </div>
+  </div>
+  <!-- 日期 -->
+  <div class="form-group row">
+    <label for="date" class="col-sm-2 col-form-label">日期<span>*</span> :</label>
+    <div class="col-sm-10">
+      <input type="date" id="date" name="date" class="form-control" placeholder="yyyy/mm/dd..." required>
+    </div>
+  </div>
+  <!-- 類別 -->
+  <div class="form-group row">
+    <label for="category" class="col-sm-2 col-form-label">類別<span>*</span> :</label>
+    <div class="col-sm-10">
+      <select class="form-control" id="category" name="category" required>
+        <option disabled selected>選擇類別</option>
+        {{#each categories}}
+        <option value="{{this.name}}" name="{{this.name}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+  <!-- 金額 -->
+  <div class="form-group row">
+    <label for="amount" class="col-sm-2 col-form-label">金額<span>*</span> :</label>
+    <div class="col-sm-10">
+      <input type="number" id="amount" name="amount" class="form-control" placeholder="" required>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-outline-info">新增支出</button>
+
+</form>

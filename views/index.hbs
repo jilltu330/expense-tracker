@@ -1,6 +1,4 @@
-<div class="container mt-3">
   <div class="row justify-content-center">
-
     {{!-- Filter option --}}
     <div class="col-12 col-lg-6 mt-4">
       <form>
@@ -45,9 +43,8 @@
               <div class="col-2 col-sm-2 d-flex justify-content-center align-items-center">
                 <p class="record-amount">{{this.amount}}</p>
               </div>
-              <div class="col-12 col-sm-2 text-center">
-                <button type="button" class="btn btn-primary m-1"><i
-                    class="far fa-edit fa-fw edit-btn"></i></button>
+              <div class="col-12 col-sm-2 text-center buttons">
+                <button type="button" class="btn btn-primary m-1"><i class="far fa-edit fa-fw edit-btn"></i></button>
                 <button type="button" class="btn btn-danger m-1"><i
                     class="far fa-trash-alt fa-fw delete-btn"></i></button>
               </div>
@@ -56,10 +53,8 @@
           {{/each}}
         </ul>
       </div>
-      <div class="row justify-content-center mt-4">
-        <button type="submit" class="btn btn-success btn-block">新增支出</button>
+      <div class="row justify-content-center mt-4 create-button">
+        <a class="btn btn-info btn-lg my-5" style="width:240px;" href="./expenses/new">新增支出</a>
       </div>
     </div>
-
   </div>
-</div>
