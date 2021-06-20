@@ -1,49 +1,53 @@
-<div class="row">
-  <div class="col-sm-2">
-    <small>＊必填欄位</small>
-  </div>
-  <div class="col-sm-10">
-    <h4>請輸入你的支出</h4>
+<div class="row d-flex justify-content-center">
+  <div class="col-12 col-lg-8 mt-4">
+    <div class="row mb-4">
+      <div class="col-sm-2">
+        <small>＊必填欄位</small>
+      </div>
+      <div class="col-sm-10 text-center">
+        <h4>請輸入你的支出</h4>
+      </div>
+    </div>
+
+
+    <form action="/expenses" method="POST">
+      <!-- 名稱 -->
+      <div class="form-group row mb-5">
+        <label for="name" class="col-sm-2 col-form-label">名稱<span>*</span> :</label>
+        <div class="col-sm-10">
+          <input type="text" id="name" name="name" class="form-control form-control-lg" placeholder="請輸入支出名稱..." required>
+        </div>
+      </div>
+      <!-- 日期 -->
+      <div class="form-group row mb-5">
+        <label for="date" class="col-sm-2 col-form-label">日期<span>*</span> :</label>
+        <div class="col-sm-10">
+          <input type="date" id="date" name="date" class="form-control form-control-lg" placeholder="" required>
+        </div>
+      </div>
+      <!-- 類別 -->
+      <div class="form-group row mb-5">
+        <label for="category" class="col-sm-2 col-form-label">類別<span>*</span> :</label>
+        <div class="col-sm-10">
+          <select class="form-control form-control-lg" id="category" name="category" required>
+            <option disabled selected>選擇類別</option>
+            {{#each categories}}
+            <option value="{{this.name}}" name="{{this.name}}">{{this.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <!-- 金額 -->
+      <div class="form-group row mb-5">
+        <label for="amount" class="col-sm-2 col-form-label">金額<span>*</span> :</label>
+        <div class="col-sm-10">
+          <input type="number" id="amount" name="amount" class="form-control form-control-lg" placeholder="" required>
+        </div>
+      </div>
+      <div class="form-group d-flex justify-content-center row mb-5">
+        <button type="submit" class="btn btn-info mr-2">新增支出</button>
+        <a href="/" class="btn btn-secondary">返回</a>
+      </div>
+    </form>
   </div>
 </div>
-
-
-<form action="/expenses" method="POST">
-  <!-- 名稱 -->
-  <div class="form-group row">
-    <label for="name" class="col-sm-2 col-form-label">名稱<span>*</span> :</label>
-    <div class="col-sm-10">
-      <input type="text" id="name" name="name" class="form-control" placeholder="請輸入支出名稱..." required>
-    </div>
-  </div>
-  <!-- 日期 -->
-  <div class="form-group row">
-    <label for="date" class="col-sm-2 col-form-label">日期<span>*</span> :</label>
-    <div class="col-sm-10">
-      <input type="date" id="date" name="date" class="form-control" placeholder="" required>
-    </div>
-  </div>
-  <!-- 類別 -->
-  <div class="form-group row">
-    <label for="category" class="col-sm-2 col-form-label">類別<span>*</span> :</label>
-    <div class="col-sm-10">
-      <select class="form-control" id="category" name="category" required>
-        <option disabled selected>選擇類別</option>
-        {{#each categories}}
-        <option value="{{this.name}}" name="{{this.name}}">{{this.name}}</option>
-        {{/each}}
-      </select>
-    </div>
-  </div>
-  <!-- 金額 -->
-  <div class="form-group row">
-    <label for="amount" class="col-sm-2 col-form-label">金額<span>*</span> :</label>
-    <div class="col-sm-10">
-      <input type="number" id="amount" name="amount" class="form-control" placeholder="" required>
-    </div>
-  </div>
-
-  <button type="submit" class="btn btn-outline-info">新增支出</button>
-  <a href="/" class="btn btn-outline-info">返回</a>
-
-</form>

@@ -37,11 +37,11 @@
               <i class="{{this.icon}} fa-2x" style="color: #80e6e8; "></i>
             </div>
             <div class="col-8 col-sm-6">
-              <p class="record-name">{{this.name}}</p>
-              <p class="record-date">{{this.date}}</p>
+              <p class="record-name" style="font-size: 1.5em;">{{this.name}}</p>
+              <small class="record-date">{{this.date}}</small>
             </div>
             <div class="col-2 col-sm-2 d-flex justify-content-center align-items-center">
-              <p class="record-amount">{{this.amount}}</p>
+              <p class="record-amount" style="font-size: 1.3em;">{{this.amount}}</p>
             </div>
             <div class="col-12 col-sm-2 text-center buttons">
               <a class="btn btn-primary m-1" href="./expenses/{{this._id}}/edit">修改</a>
@@ -107,7 +107,7 @@
 
       modalBodyDate.innerHTML = `日期：${date}`
       modalBodyName.innerHTML = `名稱：${name}`
-      modalBodyAmount.innerHTML = `金額：${amount}`
+      modalBodyAmount.innerHTML = `金額：$ ${amount}`
       deleteSubmit.action = `./expenses/${id}?_method=DELETE`
     }
   })
