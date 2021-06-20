@@ -44,10 +44,10 @@
               <p class="record-amount">{{this.amount}}</p>
             </div>
             <div class="col-12 col-sm-2 text-center buttons">
-              <a class="btn btn-primary m-1" href="./expenses/{{this._id}}/edit"><i
-                  class="far fa-edit fa-fw edit-btn"></i></a>
-              <button type="button" class="btn btn-danger m-1"><i
-                  class="far fa-trash-alt fa-fw delete-btn"></i></button>
+              <a class="btn btn-primary m-1" href="./expenses/{{this._id}}/edit">修改</a>
+              <!-- Button trigger modal -->
+              <button id="delete-btn" type="button" class="btn btn-danger m-1 delete-btn" data-toggle="modal"
+                data-target="#staticBackdrop" data-id="{{this._id}}">刪除</button>
             </div>
           </div>
         </li>
@@ -59,3 +59,56 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">確認刪除此筆紀錄：</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li id="modal-body-date"></li>
+          <li id="modal-body-name"></li>
+          <li id="modal-body-amount"></li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">返回</button>
+        <form id="delete-submit" action="" method="POST" style="display: inline;">
+          <button type="submit" class="btn btn-danger m-1">刪除</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- modal delete --}}
+<script>
+  const dataPanel = document.querySelector('.data-panel')
+  const deleteSubmit = document.querySelector('#delete-submit')
+
+  const modalBodyDate = document.querySelector('#modal-body-date')
+  const modalBodyName = document.querySelector('#modal-body-name')
+  const modalBodyAmount = document.querySelector('#modal-body-amount')
+
+  dataPanel.addEventListener('click', function deleteButtonClicked() {
+    if (event.target.matches('#delete-btn')) {
+      const id = event.target.dataset.id
+      const name = event.target.parentElement.previousElementSibling.previousElementSibling.firstElementChild.innerHTML
+      const date = event.target.parentElement.previousElementSibling.previousElementSibling.lastElementChild.innerHTML
+      const amount = event.target.parentElement.previousElementSibling.firstElementChild.innerHTML
+
+      modalBodyDate.innerHTML = `日期：${date}`
+      modalBodyName.innerHTML = `名稱：${name}`
+      modalBodyAmount.innerHTML = `金額：${amount}`
+      deleteSubmit.action = `./expenses/${id}?_method=DELETE`
+    }
+  })
+</script>

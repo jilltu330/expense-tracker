@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const exphbs = require('express-handlebars')
 const hbshelpers = require('handlebars-helpers')
 const helpers = hbshelpers()
+const methodOverride = require('method-override')
 
 const Record = require('./models/record')
 const Category = require('./models/category')
@@ -24,6 +25,8 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(express.urlencoded({ extended: true }))
+
+app.use(methodOverride('_method'))
 
 //home route
 app.get('/', (req, res) => {
@@ -75,7 +78,7 @@ app.get('/expenses/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/expenses/:id/edit', (req, res) => {
+app.put('/expenses/:id', (req, res) => {
   const id = req.params.id
   const name = req.body.name
   const date = req.body.date
@@ -94,7 +97,14 @@ app.post('/expenses/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-
+//Delete route
+app.delete('/expenses/:id', (req, res) => {
+  const id = req.params.id
+  return Record.findById(id)
+    .then(record => record.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.log(error))
+})
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)
