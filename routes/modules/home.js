@@ -4,6 +4,8 @@ const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
 
+const { dateConvert } = require('../../public/javascripts/functions')
+
 //home route
 router.get('/', (req, res) => {
   const filterBy = req.query.filterBy
@@ -22,15 +24,5 @@ router.get('/', (req, res) => {
     res.render('index', { records, categories, totalAmount, filterBy })
   }).catch(err => console.log(err))
 })
-
-// functions
-function dateConvert(date) {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const mStr = month > 9 ? month : '0' + month
-  const dStr = day > 9 ? day : '0' + day
-  return `${year}-${mStr}-${dStr}`
-}
 
 module.exports = router

@@ -4,6 +4,8 @@ const router = express.Router()
 const Record = require('../../models/record')
 const Category = require('../../models/category')
 
+const { dateConvert } = require('../../public/javascripts/functions')
+
 //Create route
 router.get('/new', (req, res) => {
   Category.find()
@@ -62,15 +64,5 @@ router.delete('/:id', (req, res) => {
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
-
-// functions
-function dateConvert(date) {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const mStr = month > 9 ? month : '0' + month
-  const dStr = day > 9 ? day : '0' + day
-  return `${year}-${mStr}-${dStr}`
-}
 
 module.exports = router
