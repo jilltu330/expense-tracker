@@ -47,7 +47,8 @@
               <a class="btn btn-primary m-1" href="./expenses/{{this._id}}/edit">修改</a>
               <!-- Button trigger modal -->
               <button id="delete-btn" type="button" class="btn btn-danger m-1 delete-btn" data-toggle="modal"
-                data-target="#staticBackdrop" data-id="{{this._id}}">刪除</button>
+                data-target="#staticBackdrop" data-id="{{this._id}}" data-name="{{this.name}}" data-date="{{this.date}}"
+                data-amount="{{this.amount}}">刪除</button>
             </div>
           </div>
         </li>
@@ -101,13 +102,13 @@
   dataPanel.addEventListener('click', function deleteButtonClicked() {
     if (event.target.matches('#delete-btn')) {
       const id = event.target.dataset.id
-      const name = event.target.parentElement.previousElementSibling.previousElementSibling.firstElementChild.innerHTML
-      const date = event.target.parentElement.previousElementSibling.previousElementSibling.lastElementChild.innerHTML
-      const amount = event.target.parentElement.previousElementSibling.firstElementChild.innerHTML
+      const name = event.target.dataset.name
+      const date = event.target.dataset.date
+      const amount = event.target.dataset.amount
 
-      modalBodyDate.innerHTML = `日期：${date}`
-      modalBodyName.innerHTML = `名稱：${name}`
-      modalBodyAmount.innerHTML = `金額：$ ${amount}`
+      modalBodyDate.innerHTML = `日期: ${date}`
+      modalBodyName.innerHTML = `名稱: ${name}`
+      modalBodyAmount.innerHTML = `金額: ${amount}`
       deleteSubmit.action = `./expenses/${id}?_method=DELETE`
     }
   })
