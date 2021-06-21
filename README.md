@@ -16,16 +16,16 @@
 * 在首頁可以根據支出「類別」篩選支出；總金額的計算只會包括被篩選出來的支出總和
 
 ### 首頁
-![index](expensesTracker_index.png)
+![image](./public/images/expenseTracker_index.png)
 
 ### 新增支出
-![index](expensesTracker_new.png)
+![image](./public/images/expenseTracker_new.png)
 
 ### 修改支出
-![index](expensesTracker_edit.png)
+![image](./public/images/expenseTracker_edit.png)
 
 ### 刪除支出
-![index](expensesTracker_delete.png)
+![image](./public/images/expenseTracker_deleteAlert.png)
 
 ## Getting Started
 **Clone respository**
