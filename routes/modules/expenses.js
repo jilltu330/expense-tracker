@@ -14,12 +14,7 @@ router.get('/new', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-  const name = req.body.name
-  const date = req.body.date
-  const category = req.body.category
-  const amount = req.body.amount
-
-  return Record.create({ name, date, category, amount })
+  return Record.create(req.body)
     .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
@@ -39,17 +34,9 @@ router.get('/:id/edit', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const id = req.params.id
-  const name = req.body.name
-  const date = req.body.date
-  const category = req.body.category
-  const amount = req.body.amount
-
   return Record.findById(id)
     .then(record => {
-      record.name = name
-      record.date = date
-      record.category = category
-      record.amount = amount
+      Object.assign(record, req.body)
       return record.save()
     })
     .then(() => res.redirect('/'))
